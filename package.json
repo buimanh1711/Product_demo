@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "a really cool app",
   "engines": {
-    "node": "14.x"
+    "node": "14.16.0"
   },
   "private": true,
   "dependencies": {
