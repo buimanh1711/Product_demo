@@ -8,6 +8,7 @@ const api = (method, url, data, responseType) => {
       method,
       url,
       data: data || {},
+      headers: {'Content-Type': 'application/json'}
     })
   } else {
     console.log('error somt')
