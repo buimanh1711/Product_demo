@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "description": "a really cool app",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^27.0.0",
