@@ -36,15 +36,15 @@ import store from './redux/store'
 import { Provider } from 'react-redux'
 
 
-const socket = io('localhost:4000')
+// const socket = io('https://manhbui-testdeploy-mblog.herokuapp.com')
 
 function App() {
-  useEffect(() => {
-    socket.emit('chat message', 'chatting');
-    socket.on('rep', (data) => {
-      console.log(data)
-    })
-  }, [])
+  // useEffect(() => {
+  //   socket.emit('chat message', 'chatting');
+  //   socket.on('rep', (data) => {
+  //     console.log(data)
+  //   })
+  // }, [])
 
   return (
     <Provider store={store}>
