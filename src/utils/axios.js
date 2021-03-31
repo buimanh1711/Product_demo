@@ -10,7 +10,7 @@ const api = (method, url, data, responseType) => {
       data: data || {},
     })
   } else {
-    console.log('error')
+    console.log('error somt')
   }
 }
 
