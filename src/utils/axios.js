@@ -1,11 +1,13 @@
 const axios = require('axios')
 
-axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'https://manhbui-testdeploy-mblog.herokuapp.com'
+const testDeploy = axios.create({
+  baseURL: 'https://manhbui-testdeploy-mblog.herokuapp.com',
+  withCredentials: true,
+})
 
 const api = (method, url, data) => {
   if (method && url) {
-    return axios({
+    return testDeploy({
       method,
       url,
       data: data || {},
