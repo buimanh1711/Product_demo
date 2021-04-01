@@ -184,7 +184,7 @@ const Update = () => {
                   {
                     categories && categories.length > 0 &&
                     categories.map(item =>
-                      <option key={item.id} selected={item.id === originData.category._id} value={JSON.stringify(item)}>
+                      <option key={item.id} selected={item.id === originData.category && originData.category._id} value={JSON.stringify(item)}>
                         {item.name}
                       </option>
                     )

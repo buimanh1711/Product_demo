@@ -46,7 +46,8 @@ const DetailEl = (props) => {
         return post
       })
       .then((post) => {
-        api('GET', `api/posts/v1/filter?category=${post.category._id}`)
+        const categoryId = post.category && post.category._id || null
+        api('GET', `api/posts/v1/filter?category=${categoryId}`)
           .then(res => {
             if (res.data && res.data.status) {
               setRelatedPosts(res.data.relatedPost)
