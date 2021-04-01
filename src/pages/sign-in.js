@@ -1,7 +1,6 @@
 import { Link, useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { usernameValidate } from '../utils/validate'
-import Cookies from 'js-cookie'
 import api from '../utils/axios'
 
 import { connect } from 'react-redux'
@@ -18,7 +17,6 @@ const SignUpSelector = (props) => {
 
     useEffect(() => {
         localStorage.clear()
-        Cookies.remove('userToken')
     }, [])
 
     const usernameValidation = (e) => {
@@ -79,7 +77,6 @@ const SignUpSelector = (props) => {
                     const { userToken } = data
                     if (data.logged) {
                         const userInfo = data.userData
-                        // // userToken && Cookies.set('userToken', userToken, { expires: 7 })
 
                         localStorage.setItem('logged', true)
                         localStorage.setItem('firstName', userInfo.firstName)
@@ -87,6 +84,8 @@ const SignUpSelector = (props) => {
                         localStorage.setItem('userId', userInfo.id)
                         localStorage.setItem('userImage', userInfo.image)
                         localStorage.setItem('userBio', userInfo.bio)
+                        localStorage.setItem('userToken', userToken)
+
                         props.getUserInfo()
 
                         history.replace({ pathname: '/' })

@@ -4,7 +4,6 @@ import { nameValidate, usernameValidate, emailValidate } from '../utils/validate
 import api from '../utils/axios'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../redux/actions/webActions'
-import Cookies from 'js-cookie'
 
 const SignInSelector = (props) => {
     
@@ -22,7 +21,6 @@ const SignInSelector = (props) => {
 
     useEffect(() => {
         localStorage.clear()
-        Cookies.remove('userToken')
     }, [])
 
     const emailValidation = (e) => {
@@ -121,11 +119,10 @@ const SignInSelector = (props) => {
             api('POST', '/api/sign-up', user)
                 .then(res => {
                     const { data } = res
-                    const { token } = data
+                    const { userToken } = data
 
                     if (data.logged) {
                         const userInfo = data.userData
-                        // token && Cookies.set('userToken', token, { expires: 7 })
 
                         localStorage.setItem('logged', true)
                         localStorage.setItem('firstName', userInfo.firstName)
@@ -133,6 +130,8 @@ const SignInSelector = (props) => {
                         localStorage.setItem('userId', userInfo.id)
                         localStorage.setItem('userImage', userInfo.image)
                         localStorage.setItem('userBio', userInfo.bio)
+                        localStorage.setItem('userToken', userToken)
+                        
                         props.getUserInfo()
 
                         history.replace({ pathname: '/' })

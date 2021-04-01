@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom'
 import api from '../../utils/axios'
 import { connect } from 'react-redux'
 import getImage from '../../utils/getImage'
-import Cookies from 'js-cookie'
 
 const MeSelector = (props) => {
 
@@ -106,7 +105,7 @@ const MeSelector = (props) => {
             const { newToken } = res.data
   
             if(newToken && newToken.length > 0) {
-              Cookies.set('userToken', newToken)
+              localStorage.setItem('userToken', newToken)
             }
   
             setChangeForm(false)
