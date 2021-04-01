@@ -79,7 +79,7 @@ const SignUpSelector = (props) => {
                     const { userToken } = data
                     if (data.logged) {
                         const userInfo = data.userData
-                        userToken && Cookies.set('userToken', userToken, { expires: 7 })
+                        // // userToken && Cookies.set('userToken', userToken, { expires: 7 })
 
                         localStorage.setItem('logged', true)
                         localStorage.setItem('firstName', userInfo.firstName)

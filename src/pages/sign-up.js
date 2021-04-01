@@ -125,7 +125,7 @@ const SignInSelector = (props) => {
 
                     if (data.logged) {
                         const userInfo = data.userData
-                        token && Cookies.set('userToken', token, { expires: 7 })
+                        // token && Cookies.set('userToken', token, { expires: 7 })
 
                         localStorage.setItem('logged', true)
                         localStorage.setItem('firstName', userInfo.firstName)

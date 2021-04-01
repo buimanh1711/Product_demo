@@ -2,6 +2,8 @@ const axios = require('axios')
 
 const testDeploy = axios.create({
   baseURL: 'https://manhbui-testdeploy-mblog.herokuapp.com',
+  // baseURL: 'http://localhost:5000',
+
   withCredentials: true,
 })
 
@@ -19,10 +21,3 @@ const api = (method, url, data) => {
 
 export default api
 
-export const apiUpLoad = (data) => {
-  return axios({
-    method: 'POST',
-    url: '/upload',
-    data
-  })
-}
