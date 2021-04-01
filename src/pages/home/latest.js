@@ -22,7 +22,7 @@ const Latest = (props) => {
                             </div>
                             <div className='first-infor'>
                                 <Link to={`posts/${posts[0].slug}`} className='first-category'>
-                                    {posts[0].category.name.toUpperCase()}
+                                    {posts[0].category && posts[0].category.name.toUpperCase() || "Đang cập nhật"}
                                 </Link>
                                 <Link to='/' className='first-title'>
                                     {posts[0].title}
@@ -55,7 +55,7 @@ const Latest = (props) => {
                                                         <p className='next-desc'>
                                                             {item.description}
                                                         </p>
-                                                        <Link to='/' className='next-category'>{item.category.name.toUpperCase()}</Link>
+                                                        <Link to='/' className='next-category'>{item.category && item.category.name.toUpperCase() || 'Đang cập nhật'}</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,7 +82,7 @@ const Latest = (props) => {
                                                         <p className='next-desc'>
                                                             {item.description}
                                                         </p>
-                                                        <Link to='/' className='next-category'>{item.category.name.toUpperCase()}</Link>
+                                                        <Link to='/' className='next-category'>{item.category && item.category.name.toUpperCase() || 'Đang cập nhật'}</Link>
                                                     </div>
                                                 </div>
                                             </div>

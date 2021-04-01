@@ -152,13 +152,17 @@ const MeSelector = (props) => {
 
     api('GET', '/api/me')
       .then(res => {
+        console.log(res.data)
+
         if (res.data && res.data.status) {
           setUserPosts(res.data.posts)
         } else {
+          console.log(res.data)
           history.replace({ pathname: '/sign-in' })
         }
       })
       .catch(err => {
+        console.log('loi')
         console.log(err)
       })
   }, [])

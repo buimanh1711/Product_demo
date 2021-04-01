@@ -74,12 +74,12 @@ const SignUpSelector = (props) => {
         if (checkValidate(usernameErr, passCheck)) {
             api('POST', '/api/sign-in', userData)
                 .then(res => {
+                    console.log('response: ', res)
                     const { data } = res
-                    const { token } = data
-                    
+                    const { userToken } = data
                     if (data.logged) {
                         const userInfo = data.userData
-                        token && Cookies.set('userToken', token, { expires: 7 })
+                        userToken && Cookies.set('userToken', userToken, { expires: 7 })
 
                         localStorage.setItem('logged', true)
                         localStorage.setItem('firstName', userInfo.firstName)

@@ -59,7 +59,7 @@ const Update = () => {
           shortDescEl.current.value = res.data.post.description
           setContent(res.data.post.content)
           cateEl.current.value = JSON.stringify(res.data.post.category)
-          setCate(res.data.post.category.name)
+          setCate(res.data.post.category && res.data.post.category.name || 'Đang cập nhật')
           setTitle(res.data.post.title)
           setDesc(res.data.post.description)
           getData({
@@ -148,7 +148,7 @@ const Update = () => {
     value = JSON.parse(value)
 
     if (value.name === '') {
-      value = originData.category.name
+      value = originData.category && originData.category.name || 'Đang cập nhật'
     }
 
     setCate(value.name)

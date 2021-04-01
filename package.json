@@ -31,11 +31,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": {
-    "*": {
-      "target": "https://manhbui-testdeploy-mblog.herokuapp.com"
-    }
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
