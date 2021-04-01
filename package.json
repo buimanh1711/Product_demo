@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "description": "a really cool app",
-  "homepage": "/buimanh1711.github.io-Product_demo",
+  "homepage": "https://buimanh1711.github.io/Product_demo/",
   "private": true,
   "engines": {
     "node": "15.0.1",
