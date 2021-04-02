@@ -27,7 +27,7 @@ const PostSelector = (props) => {
     const [totalPage, setTotalPage] = useState(0)
 
     useEffect(() => {
-        props.toggleLoading()
+        props.toggleLoading(true)
         api('GET', url)
             .then((res) => {
                 if (res.status === 200) {
@@ -52,7 +52,7 @@ const PostSelector = (props) => {
             })
             .catch(err => console.log(err))
             .then(() => {
-                props.toggleLoading()
+                props.toggleLoading(false)
             })
     }, [])
 
@@ -64,7 +64,7 @@ const PostSelector = (props) => {
     const changePage = (page) => {
         let url = '/api/posts?'
 
-        props.toggleLoading()
+        props.toggleLoading(true)
         api('GET', `${url}page=${page}`)
             .then((res) => {
                 if (res.status === 200) {
@@ -92,7 +92,7 @@ const PostSelector = (props) => {
             })
             .catch(err => console.log(err))
             .then(() => {
-                props.toggleLoading()
+                props.toggleLoading(false)
             })
     }
 

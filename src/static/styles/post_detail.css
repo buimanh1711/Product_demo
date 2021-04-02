@@ -1,11 +1,17 @@
-#post-detail {
+#post-detail h5 {
+  margin-bottom: 20px;
+  font-family: myFirstFont;
+  font-size: 1.5rem;
+  font-style: italic;
+  padding-left: 20px;
+  border-left: 1px solid #5073fe
 }
 
 #post-detail .detail-container {
   margin-top: 40px;
 }
 
-#post-detail .detail-title .title  {
+#post-detail .detail-title .title {
   font-size: 2rem;
   margin-top: 12px;
   margin-bottom: 32px;
@@ -67,7 +73,6 @@
 #post-detail .detail-relation-container a.more:hover {
   color: #5073FE !important;
   transition: ease .2s;
-
 }
 
 #post-detail .detail-relate-item-container {
@@ -185,13 +190,14 @@
 }
 
 #post-detail .comment-input {
-  border: 1px solid rgba(255, 255, 255, 0.267);;
+  border: 1px solid rgba(255, 255, 255, 0.267);
+  ;
   outline: none;
   color: white;
   padding: 8px;
   font-size: 1rem;
   font-family: myFirstFont;
-  border-radius: 20px;  
+  border-radius: 20px;
   background: transparent;
   padding-left: 12px;
   resize: none;
@@ -262,7 +268,6 @@
 #post-detail .content-html {
   overflow-wrap: break-word;
 }
-
 
 #post-detail .content-html img {
   width: 90%;

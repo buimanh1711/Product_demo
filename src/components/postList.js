@@ -220,10 +220,10 @@ const PostListSelector = (props) => {
                                     <li key={item.id} className='comment-item'>
                                       <div className='comment-author'>
                                         <Link to={`/`}>
-                                          <img src={getImage(item.user.image)} />
+                                          <img src={getImage(item.user && item.user.image || null)} />
                                         </Link>
                                         <Link to={`/`}>
-                                          {`${item.user.firstName} ${item.user.lastName}`}
+                                          {`${item.user && item.user.firstName} ${item.user && item.user.lastName}`}
                                         </Link>
                                       </div>
                                       <div className='comment-content'>

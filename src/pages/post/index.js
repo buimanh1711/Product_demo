@@ -32,7 +32,7 @@ const PostSelector = (props) => {
             url = url + `sortDate=${date}&`
         }
 
-        props.toggleLoading()
+        props.toggleLoading(true)
         api('GET', `${url}page=${1}`)
             .then((res) => {
                 if (res.status === 200) {
@@ -61,7 +61,7 @@ const PostSelector = (props) => {
             })
             .catch(err => console.log(err))
             .then(() => {
-                props.toggleLoading()
+                props.toggleLoading(false)
             })
     }
 
@@ -79,7 +79,7 @@ const PostSelector = (props) => {
             url = url + `sortDate=${date}&`
         }
 
-        props.toggleLoading()
+        props.toggleLoading(true)
         api('GET', `${url}page=${page}`)
             .then((res) => {
                 if (res.status === 200) {
@@ -107,7 +107,7 @@ const PostSelector = (props) => {
             })
             .catch(err => console.log(err))
             .then(() => {
-                props.toggleLoading()
+                props.toggleLoading(false)
             })
     }
 
@@ -160,7 +160,7 @@ const PostSelector = (props) => {
     }
 
     useEffect(() => {
-        props.toggleLoading()
+        props.toggleLoading(true)
         api('GET', `/api/posts?page=${1}`)
             .then((res) => {
                 if (res.status === 200) {
@@ -185,7 +185,7 @@ const PostSelector = (props) => {
             })
             .catch(err => console.log(err))
             .then(() => {
-                props.toggleLoading()
+                props.toggleLoading(false)
             })
     }, [])
 

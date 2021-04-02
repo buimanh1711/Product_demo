@@ -5,6 +5,7 @@ import toSlug from '../../utils/toSlug'
 import { useHistory, Link, useLocation } from 'react-router-dom'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import getImage from '../../utils/getImage'
 
 const defaultValue = {
   select: 'Choose',
@@ -20,8 +21,7 @@ const Create = () => {
   const [title, setTitle] = useState(defaultValue.title)
   const [desc, setDesc] = useState(defaultValue.shortDesc)
   const [cate, setCate] = useState(defaultValue.category)
-  const [file, setFile] = useState('')
-  const [data, getData] = useState({ name: '', path: '/images/test/item.jpeg' })
+  const [file, setFile] = useState('/images/defaultimg.jpg')
   const [categories, setCategories] = useState([])
   const [select, setSelect] = useState(false)
   const [content, setContent] = useState('')
@@ -30,6 +30,7 @@ const Create = () => {
   const shortDescEl = useRef(null)
   const newCateEl = useRef(null)
   const sourceEl = useRef(null)
+  const fileEl = useRef(null)
 
   useEffect(() => {
     api('GET', '/api/auth')
@@ -52,17 +53,10 @@ const Create = () => {
   }, [])
 
   const handleChange = (e) => {
-    const selectedFile = e.target.files[0]
+    console.log('hello')
+    const selectedFile = e.target.value && e.target.value.length > 0 && e.target.value || '/images/defaultimg.jpg'
+    console.log(selectedFile)
     setFile(selectedFile)
-    const reader = new FileReader()
-    reader.onloadend = (e) => {
-      const url = reader.result
-      getData({ name: 'manh', path: url })
-    }
-
-    if (selectedFile && selectedFile.type.match('image.*')) {
-      reader.readAsDataURL(selectedFile)
-    }
   }
 
   const handleSubmit = (e) => {
@@ -72,6 +66,7 @@ const Create = () => {
     const currentShortDesc = shortDescEl.current.value
     const currentcontent = content
     const cateObj = cateEl.current.value
+    const file = fileEl.current.value
     const currentSource = sourceEl.current.value.length > 0 && sourceEl.current.value || null
     const newCate = newCateEl.current.value.length > 0 && newCateEl.current.value || null
     const slug = toSlug(currentTitle)
@@ -176,7 +171,7 @@ const Create = () => {
               </div>
               <div className='create-img'>
                 <label htmlFor='create_image'>Thumbnail image</label>
-                <input onChange={handleChange} type='file' id='create_image' />
+                <input ref={fileEl} onChange={handleChange} id='create_image' />
                 <p>The main image of the post</p>
               </div>
               <div className='create-shortdesc'>
@@ -215,7 +210,7 @@ const Create = () => {
             <div className='create-demo'>
               <div className='first-container'>
                 <div className='first-thumb'>
-                  <img onError="../images/test/item.jpeg" src={`${data.path}`} alt='img' />
+                  <img onError={() => setFile("/images/defaultimg.jpg")} src={getImage(file)} alt='img' />
                 </div>
                 <div className='first-infor'>
                   <p to='/' className='first-category'>

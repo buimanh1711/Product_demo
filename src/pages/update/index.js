@@ -6,12 +6,13 @@ import { useHistory, Link, useParams } from 'react-router-dom'
 import getImage from '../../utils/getImage'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { connect } from 'react-redux'
 
 const defaultValue = {
   select: 'choose'
 }
 
-const Update = () => {
+const UpdateEl = (props) => {
   const postId = useParams().postId || null
 
   const history = useHistory()
@@ -19,7 +20,7 @@ const Update = () => {
   const [title, setTitle] = useState(defaultValue.title)
   const [desc, setDesc] = useState(defaultValue.shortDesc)
   const [cate, setCate] = useState(defaultValue.category)
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState('')
   const [data, getData] = useState({ name: '', path: '/images/defaultimg.jpg' })
   const [categories, setCategories] = useState([])
   const [select, setSelect] = useState(false)
@@ -30,9 +31,15 @@ const Update = () => {
   const shortDescEl = useRef(null)
   const newCateEl = useRef(null)
   const sourceEl = useRef(null)
+  const fileEl = useRef(null)
   const [content, setContent] = useState('')
 
   useEffect(() => {
+    props.dispatch({
+      type: 'TOGGLE_LOADING',
+      payload: true
+    })
+
     api('GET', '/api/auth')
       .then(res => {
         if (res.data && !res.data.status) {
@@ -50,11 +57,18 @@ const Update = () => {
           })
       })
       .catch(err => console.log(err))
+      .then(() => {
+        props.dispatch({
+          type: 'TOGGLE_LOADING',
+          payload: false
+        })
+      })
 
     api('GET', `api/posts/update/${postId}`)
       .then(res => {
         if(res.data && res.data.status) {
           setOriginData(res.data.post)
+          console.log(res.data.post)
           titleEl.current.value = res.data.post.title
           shortDescEl.current.value = res.data.post.description
           setContent(res.data.post.content)
@@ -62,30 +76,18 @@ const Update = () => {
           setCate(res.data.post.category && res.data.post.category.name || 'Đang cập nhật')
           setTitle(res.data.post.title)
           setDesc(res.data.post.description)
+          setFile(res.data.post.image)
           getData({
             ...data,
             path: getImage(res.data.post.image)
           })
+        } else {
+
         }
       })
       .catch(err => console.log(err))
 
   }, [])
-
-  const handleChange = (e) => {
-    const selectedFile = e.target.files[0]
-    
-    setFile(selectedFile)
-    const reader = new FileReader()
-    reader.onloadend = (e) => {
-      const url = reader.result
-      getData({ name: 'manh', path: url })
-    }
-
-    if (selectedFile && selectedFile.type.match('image.*')) {
-      reader.readAsDataURL(selectedFile)
-    }
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -97,14 +99,14 @@ const Update = () => {
     const newCate = newCateEl.current.value.length > 0 && newCateEl.current.value || null
     const slug = toSlug(currentTitle)
     const currentCate = cateObj !== defaultValue.select && JSON.parse(cateObj)
+    const newFile = fileEl.current.value
 
     formData.append('title', currentTitle)
     formData.append('shortDesc', currentShortDesc)
     formData.append('content', content)
     formData.append('source', currentSource)
-    currentCate && formData.append('categoryId', currentCate._id)
-    formData.append('image', file || originData.image)
-    formData.append('oldFile', originData.image)
+    currentCate && formData.append('categoryId', currentCate && currentCate._id || null)
+    formData.append('image', newFile || originData.image)
     formData.append('author', originData.author && originData.author._id)
     formData.append('slug', slug)
     newCate && formData.append('newCate', newCate)
@@ -154,6 +156,13 @@ const Update = () => {
     setCate(value.name)
   }
 
+  const handleChange = (e) => {
+    console.log('hello')
+    const selectedFile = e.target.value && e.target.value.length > 0 && e.target.value || '/images/defaultimg.jpg'
+    console.log(selectedFile)
+    setFile(selectedFile)
+  }
+
   const changeDesc = (e) => {
     let value = e.target.value
     if (value === '') {
@@ -184,7 +193,7 @@ const Update = () => {
                   {
                     categories && categories.length > 0 &&
                     categories.map(item =>
-                      <option key={item.id} selected={item.id === originData.category && originData.category._id} value={JSON.stringify(item)}>
+                      <option key={item.id} selected={item.id === originData && originData.category && originData.category._id || null} value={JSON.stringify(item)}>
                         {item.name}
                       </option>
                     )
@@ -197,7 +206,7 @@ const Update = () => {
               </div>
               <div className='create-img'>
                 <label htmlFor='create_image'>Thumbnail image</label>
-                <input onChange={handleChange} type='file' id='create_image' />
+                <input ref={fileEl} onChange={handleChange} id='create_image' />
                 <p>The main image of the post</p>
               </div>
               <div className='create-shortdesc'>
@@ -236,7 +245,7 @@ const Update = () => {
             <div className='create-demo'>
               <div className='first-container'>
                 <div className='first-thumb'>
-                  <img onerror="../images/test/item.jpeg" src={data.path} alt='img' />
+                <img onError={() => setFile("/images/defaultimg.jpg")} src={getImage(file)} alt='img' />
                 </div>
                 <div className='first-infor'>
                   <p to='/' className='first-category'>
@@ -258,4 +267,9 @@ const Update = () => {
   )
 }
 
+const mapStateToProps = (state) => ({
+  web: state.web
+})
+
+const Update = connect(mapStateToProps)(UpdateEl)
 export default Update

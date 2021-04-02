@@ -186,3 +186,25 @@
     left: 50%;
     transform: translate(-50%, -50%)
   }
+
+  textarea::-webkit-scrollbar {
+    opacity: 0;
+  }
+  
+  /* Track */
+  textarea::-webkit-scrollbar-track {
+    opacity: 0;
+
+  }
+  
+  /* Handle */
+  textarea::-webkit-scrollbar-thumb {
+    opacity: 0;
+
+  }
+  
+  /* Handle on hover */
+  textarea::-webkit-scrollbar-thumb:hover {
+    opacity: 0;
+  
+  }

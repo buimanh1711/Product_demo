@@ -5,7 +5,7 @@ const LoadingSelector = (props) => {
   
   return (
     <div id='page-loading' style={{display: props.web.loading ? 'block' : 'none'}}>
-      {/* <img src='/images/loading.gif' /> */}
+      <img src='/images/loading.gif' />
     </div>
   )
 }

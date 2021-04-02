@@ -15,27 +15,28 @@ const MeSelector = (props) => {
   const oldPassEl = useRef(null)
   const newPassEl = useRef(null)
   const confirmPassEl = useRef(null)
+  const fileEl = useRef(null)
 
   const [tempBio, setTempBio] = useState('Create your bio')
   const [changeForm, setChangeForm] = useState(false)
   const [data, getData] = useState({ name: '', path: '' })
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState(web.user.userImage)
   const [oldPassErr, setOldPassErr] = useState(false)
   const [newPassErr, setNewPassErr] = useState(false)
   const [confirmPassErr, setConfirmPassErr] = useState(false)
   const [changingPass, setChangingPass] = useState(false)
   const [userPosts, setUserPosts] = useState(0)
-
+  const [changingAvt, setChangingAvt] = useState(false)
   const handleOldPass = (e) => {
     let value = e.target.value
     value = value.trim()
-    if(value.length < 6) {
+    if (value.length < 6) {
       setOldPassErr(true)
     } else {
       setOldPassErr(false)
     }
 
-    if(value === '') {
+    if (value === '') {
       setOldPassErr(false)
     }
   }
@@ -43,16 +44,16 @@ const MeSelector = (props) => {
   const handleNewPass = (e) => {
     let value = e.target.value
     value = value.trim()
-    if(value.length < 6) {
+    if (value.length < 6) {
       setNewPassErr(true)
     } else {
       setNewPassErr(false)
     }
 
-    if(value === '') {
+    if (value === '') {
       setNewPassErr(false)
     }
-  
+
   }
 
   const closeChangePass = () => {
@@ -66,13 +67,13 @@ const MeSelector = (props) => {
     let value = e.target.value
     value = value.trim()
 
-    if(value !== newPassEl.current.value) {
+    if (value !== newPassEl.current.value) {
       setConfirmPassErr(true)
     } else {
       setConfirmPassErr(false)
     }
 
-    if(value === '') {
+    if (value === '') {
       setConfirmPassErr(false)
     }
 
@@ -84,7 +85,7 @@ const MeSelector = (props) => {
     const bio = bioEl.current.value && bioEl.current.value.length > 0 && bioEl.current.value || web.user.userBio
     const oldPass = oldPassEl.current.value && oldPassEl.current.value.length > 5 && oldPassEl.current.value || null
     const newPass = newPassEl.current.value && newPassEl.current.value.length > 5 && newPassEl.current.value || null
-    
+
     const data = {
       file,
       firstName,
@@ -94,7 +95,7 @@ const MeSelector = (props) => {
       oldPass
     }
 
-    if(!oldPassErr && !newPassErr && !confirmPassErr) {
+    if (!oldPassErr && !newPassErr && !confirmPassErr) {
       api('POST', 'api/me', data)
         .then(res => {
           if (res.data && res.data.status) {
@@ -103,11 +104,11 @@ const MeSelector = (props) => {
             localStorage.setItem('lastName', newInfo.lastName)
             localStorage.setItem('userBio', newInfo.bio)
             const { newToken } = res.data
-  
-            if(newToken && newToken.length > 0) {
+
+            if (newToken && newToken.length > 0) {
               localStorage.setItem('userToken', newToken)
             }
-  
+
             setChangeForm(false)
             window.location.reload()
           } else {
@@ -119,10 +120,11 @@ const MeSelector = (props) => {
 
   const changeAvt = () => {
     const formData = new FormData()
-    formData.append('file', file)
-    formData.append('oldFile', web.user.userImage)
+    formData.append('image', file)
+
     api('POST', 'api/me/avt', formData)
       .then(res => {
+        console.log(res)
         if (res.data && res.data.status) {
           localStorage.setItem('userImage', res.data.newImage)
           window.location.reload()
@@ -132,18 +134,9 @@ const MeSelector = (props) => {
   }
 
   const handleAvtChange = (e) => {
-    const selectedFile = e.target.files[0]
+    const selectedFile = e.target.value
+    console.log(selectedFile)
     setFile(selectedFile)
-
-    const reader = new FileReader()
-    reader.onloadend = (e) => {
-      const url = reader.result
-      getData({ name: 'manh', path: url })
-    }
-
-    if (selectedFile && selectedFile.type.match('image.*')) {
-      reader.readAsDataURL(selectedFile)
-    }
   }
 
   useEffect(() => {
@@ -182,13 +175,13 @@ const MeSelector = (props) => {
           <div className='password-form'>
             <p onClick={() => setChangingPass(true)}>Change Password</p>
             <div className='change-pass-container' hidden={!changingPass}>
-            <i onClick={closeChangePass} className="fas fa-times-circle"></i>
-              <input onChange={handleOldPass} ref={oldPassEl} type='password' style={{borderColor: oldPassErr && 'rgb(231, 100, 100)'}} placeholder='current password'></input>
-              <input onChange={handleNewPass} ref={newPassEl} type='password' style={{borderColor: newPassErr && 'rgb(231, 100, 100)'}} placeholder='new password'></input>
-              <input onChange={handleConfirmPass} ref={confirmPassEl} type='password' style={{borderColor: confirmPassErr && 'rgb(231, 100, 100)'}} placeholder='confirm password'></input>
+              <i onClick={closeChangePass} className="fas fa-times-circle"></i>
+              <input onChange={handleOldPass} ref={oldPassEl} type='password' style={{ borderColor: oldPassErr && 'rgb(231, 100, 100)' }} placeholder='current password'></input>
+              <input onChange={handleNewPass} ref={newPassEl} type='password' style={{ borderColor: newPassErr && 'rgb(231, 100, 100)' }} placeholder='new password'></input>
+              <input onChange={handleConfirmPass} ref={confirmPassEl} type='password' style={{ borderColor: confirmPassErr && 'rgb(231, 100, 100)' }} placeholder='confirm password'></input>
             </div>
           </div>
-          <button disabled={!(!oldPassErr && !newPassErr && !confirmPassErr)} style={{cursor: !(!oldPassErr && !newPassErr && !confirmPassErr) && 'no-drop' || 'pointer'}} onClick={handleSubmit}>Submit</button>
+          <button disabled={!(!oldPassErr && !newPassErr && !confirmPassErr)} style={{ cursor: !(!oldPassErr && !newPassErr && !confirmPassErr) && 'no-drop' || 'pointer' }} onClick={handleSubmit}>Submit</button>
         </div>
       </div>
       <div className='profile-container'>
@@ -203,17 +196,19 @@ const MeSelector = (props) => {
         <div className='profile-body'>
           <div className='body-user-info'>
             <div className='avt-wrapper'>
-              <img src={file ? data.path : getImage(web.user.userImage)} />
-              <label htmlFor='change-avt' className='change-avt'>
+              <img src={getImage(file || web.user.userImage)} />
+              <button onClick={() => setChangingAvt(true)} htmlFor='change-avt' className='change-avt'>
                 <i className="fas fa-camera"></i>
-                <input id='change-avt' onChange={handleAvtChange} type='file' placeholder='avatar' />
-              </label>
+              </button>
             </div>
-            <div className='user-bio'>
-              {
-                file &&
+            {
+              changingAvt &&
+              <div className='profile-changeavt-form'>
+                <input onChange={handleAvtChange} id='avt-change' ref={fileEl} placeholder='avatar image link:' />
                 <button onClick={changeAvt} className='change-avt-btn'>Save</button>
-              }
+              </div>
+            }
+            <div className='user-bio'>
               <p>{`${web.user && web.user.firstName} ${web.user && web.user.lastName}`}</p>
               <span>{web.user.userBio}</span>
             </div>

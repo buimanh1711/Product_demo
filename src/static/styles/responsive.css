@@ -5,9 +5,19 @@
   max-width: 100%;
 }
 
-@media (max-width: 1199.98px) {}
+@media (max-width: 1199.98px) {
+  #post-detail .comment-input {
+    font-size: .8rem;
+    padding-right: 30px
+  }
+  #post-detail .detail-tools-container button span {
+    font-size: .7rem;
+  }
+}
 
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+  
+}
 
 @media (max-width: 991.98px) {
   #post-detail .detail-relation-container ul li {
@@ -115,6 +125,12 @@
 }
 
 @media (max-width: 575.98px) {
+  #main_bread-crumb ul li.bc-detail {
+    display: none;
+  }
+  #main_bread-crumb ul li.bc-category {
+    display: none
+  }
   .notification {
     width: 300px;
   }

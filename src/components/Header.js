@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import SearchModal from './SearchModal'
-import Notification from './Notification'
 
 import { connect } from 'react-redux'
 import getImage from '../utils/getImage'
@@ -11,7 +10,6 @@ const HeaderSelector = (props) => {
   const { asPath, web } = props
   const [childMenu, setChildMenu] = useState(false)
   const [searchForm, setSearchForm] = useState(false)
-  const [notif, setNotif] = useState(false)
   const [mbMenu, setMbMenu] = useState(false)
 
   const fakeMenu = {
@@ -57,10 +55,6 @@ const HeaderSelector = (props) => {
 
   const toggleSearchForm = () => {
     setSearchForm(!searchForm)
-  }
-
-  const toggleNotif = () => {
-    setNotif(!notif)
   }
 
   const toggleMobileMenu = () => {
@@ -110,19 +104,6 @@ const HeaderSelector = (props) => {
               <span>Create post</span>
               <i className="fas fa-feather"></i>
             </Link>
-            {
-              web.logged &&
-              <div className='notif-btn-container'>
-                <button onClick={toggleNotif} className='notif-btn'>
-                  <span>10</span>
-                  <i className="far fa-bell"></i>
-                </button>
-                {
-                  notif &&
-                  <Notification />
-                }
-              </div>
-            }
             <button onClick={setSearchForm} className='search-btn'>
               <i className="fas fa-search"></i>
             </button>
@@ -201,19 +182,6 @@ const HeaderSelector = (props) => {
               <img src='/images/pageLogo.png' id='site-logo' alt='MBlog' />
             </Link>
           </div>
-          {
-            web.logged &&
-            <div className='mb notif-btn-container'>
-              <button onClick={toggleNotif} className='mb notif-btn'>
-                <span>10</span>
-                <i className="far fa-bell"></i>
-              </button>
-              {
-                notif &&
-                <Notification />
-              }
-            </div>
-          }
           <button onClick={toggleMobileMenu} className='mb-menu-btn active'>
             <i className="fas fa-bars"></i>
           </button>

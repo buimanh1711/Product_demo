@@ -4,18 +4,24 @@ import Latest from './latest'
 import Invite from './invite'
 import { useEffect, useState } from 'react'
 import api from '../../utils/axios'
+import { connect } from 'react-redux'
+import { toggleLoading } from '../../redux/actions/webActions'
 
-const Home = () => {
+const HomeSelector = (props) => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        console.log(1)
+        props.toggleLoading(true)
         api('GET', 'api/posts')
             .then(res => {
                 console.log(res)
-                if(res.data && res.data.status) {
+                if (res.data && res.data.status) {
                     setPosts(res.data.posts)
+                    props.toggleLoading(false)
                 }
+            })
+            .then(() => {
+                props.toggleLoading(false)
             })
     }, [])
 
@@ -30,5 +36,15 @@ const Home = () => {
         </>
     )
 }
+
+const mapStateToProps = (state) => ({
+    web: state.web
+})
+
+const mapActionToProps = {
+    toggleLoading
+}
+
+const Home = connect(mapStateToProps, mapActionToProps)(HomeSelector)
 
 export default Home

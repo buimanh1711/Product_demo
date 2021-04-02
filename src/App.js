@@ -45,6 +45,7 @@ function App() {
   //     console.log(data)
   //   })
   // }, [])
+  console.log(process.env.API_ENDPOINT)
 
   return (
     <Provider store={store}>

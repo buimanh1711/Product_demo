@@ -48,7 +48,7 @@ const reducer = (state = initState, action) => {
         const { loading } = state
         return {
             ...state,
-            loading: !loading
+            loading: action.payload
         }
     }
     return state

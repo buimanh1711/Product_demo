@@ -22,6 +22,7 @@ const DetailEl = (props) => {
 
   useEffect(() => {
     //get page
+    props.dispatch({ type: 'TOGGLE_LOADING', payload: true })
     api('GET', `api/posts/${title}`)
       .then(res => {
         if (res.data && res.data.status) {
@@ -54,6 +55,10 @@ const DetailEl = (props) => {
             }
           })
           .catch(err => console.log(err))
+      })
+      .then(() => {
+        props.dispatch({ type: 'TOGGLE_LOADING', payload: false })
+
       })
 
 
@@ -161,6 +166,11 @@ const DetailEl = (props) => {
                   {post.title}
                 </h1>
               </div>
+              <div className='detail-short-description'>
+                <h5>
+                  {post.description}
+                </h5>
+              </div>
               <div className='detail-img-wrapper'>
                 <img width='100%' src={getImage(post.image)} />
               </div>
@@ -207,10 +217,10 @@ const DetailEl = (props) => {
                           <li key={item.id} className='comment-item'>
                             <div className='comment-author'>
                               <Link to='/'>
-                                <img src={getImage(item.user.image)} />
+                                <img src={getImage(item.user && item.user.image)} />
                               </Link>
                               <Link to='/'>
-                                {`${item.user.firstName} ${item.user.lastName}`}
+                                {`${item.user && item.user.firstName} ${item.user && item.user.lastName}`}
                               </Link>
 
                             </div>

@@ -17,12 +17,12 @@ const SearchSelector = (props) => {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    props.toggleLoading()
+    props.toggleLoading(true)
     api('GET', `api/search/${slug}`)
       .then(res => {
         if (res.data && res.data.status) {
           setPosts(res.data.posts)
-          props.toggleLoading()
+          props.toggleLoading(false)
         }
       })
   }, [])
