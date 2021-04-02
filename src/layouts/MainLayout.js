@@ -13,6 +13,7 @@ const MainTemplateSelector = (props) => {
     const [siteInfo, setSiteInfo] = useState({})
 
     useEffect(() => {
+        props.getUserInfo()
         api('GET', 'api/site')
             .then(res => {
                 if (res.data && res.data.status) {

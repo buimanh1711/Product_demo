@@ -23,7 +23,7 @@ const Latest = (props) => {
                                 <Link to={`posts/${posts[0].slug}`} className='first-category'>
                                     {posts[0].category && posts[0].category.name.toUpperCase() || "Đang cập nhật"}
                                 </Link>
-                                <Link to='/' className='first-title'>
+                                <Link to={`posts/${posts[0].slug}`} className='first-title'>
                                     {posts[0].title}
                                 </Link>
                                 <p className='first-desc'>

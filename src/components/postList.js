@@ -18,7 +18,7 @@ const PostListSelector = (props) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deletedPost, setDeletedPost] = useState({})
   const isAdmin = web.user.role
-
+  console.log(isAdmin, props.author, web)
   const commentEl = useRef(null)
 
   const toggleComment = (index, postId) => {
@@ -194,7 +194,6 @@ const PostListSelector = (props) => {
                         <i className="far fa-trash-alt"></i>
                       </button>
                     </div>
-
                   }
                   {
                     isAdmin === 'admin' && !props.author &&

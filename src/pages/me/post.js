@@ -14,7 +14,6 @@ const useQuery = () => {
 const PostSelector = (props) => {
     const { web } = props
     const authorQ = localStorage.getItem('userId')
-
     let url = '/api/posts?'
     if (authorQ) {
         url = url + `checkAuthor=${authorQ}&`

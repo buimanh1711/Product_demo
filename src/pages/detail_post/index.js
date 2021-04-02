@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 
 const DetailEl = (props) => {
   const { web } = props
+  const isAdmin = web.user.role
 
   const history = useHistory()
   const [post, setPost] = useState({})
@@ -23,6 +24,7 @@ const DetailEl = (props) => {
   useEffect(() => {
     //get page
     props.dispatch({ type: 'TOGGLE_LOADING', payload: true })
+
     api('GET', `api/posts/${title}`)
       .then(res => {
         if (res.data && res.data.status) {
@@ -31,13 +33,14 @@ const DetailEl = (props) => {
             postData.liked = true
           }
           setPost(postData)
+          
           return res.data.post
         } else {
           console.log('err')
         }
       })
-      .catch(err => console.log(err))
       .then((post) => {
+        console.log(post)
         api('GET', `api/posts/comment/${post._id}?page=${1}`)
           .then(res2 => {
             if (res2.data && res2.data.status) {
@@ -56,13 +59,49 @@ const DetailEl = (props) => {
           })
           .catch(err => console.log(err))
       })
+      .catch(err => console.log(err))
       .then(() => {
         props.dispatch({ type: 'TOGGLE_LOADING', payload: false })
-
       })
-
-
   }, [])
+
+  const getComment = (postId) => {
+    setCmtLoading(true)
+    api("GET", `api/posts/comment/${postId}?page=${1}`)
+      .then(res => {
+        if (res.data && res.data.status) {
+          if (res.data.comments && res.data.comments.length > 0) {
+            setComments(res.data.comments)
+          }
+        } else {
+          setComments([])
+        }
+      })
+      .catch(err => console.log(err))
+      .then(() => {
+        setCmtLoading(false)
+      })
+  }
+  const deleteComment = (commentId) => {
+    console.log(commentId)
+    api('GET', `api/posts/u/delete-comment?commentId=${commentId}&postId=${post._id}&userId=${web.user.userId}`)
+      .then(res => {
+        if (res.data && res.data.status) {
+          let commentCount = [...post.comment]
+          commentCount = commentCount.filter(x => x._id !== commentId)
+
+          const newPostData =
+          {
+            ...post,
+            comment: commentCount
+          }
+
+          setPost(newPostData)
+
+          getComment(post._id)
+        }
+      })
+  }
 
   const sendComment = () => {
     setCmtLoading(true)
@@ -77,7 +116,7 @@ const DetailEl = (props) => {
       .then(res => {
         if (res.data && res.data.status) {
           commentEl.current.value = ''
-
+          const newId = String(res.data.newCommentId)
           let newComtList = comments
           if (comments.length > 3)
             newComtList = comments.slice(1)
@@ -91,11 +130,11 @@ const DetailEl = (props) => {
                   lastName: web.user.lastName,
                   image: web.user.userImage
                 },
-                ...postData
+                ...postData,
+                _id: newId
               }
             ]
           )
-
         } else {
           if (res.data.message === 'vui long dang nhap') {
             history.replace({ pathname: '/sign-in' })
@@ -211,7 +250,8 @@ const DetailEl = (props) => {
                     <ul>
                       {
                         comments.map(item => (
-                          <li key={item.id} className='comment-item'>
+                          <li key={item._id} className='comment-item'>
+                            {(isAdmin === 'admin' || (item.user && item.user._id === web.user.userId)) && <button onClick={() => deleteComment(item._id)} className='postList-delete-comt'><i className="far fa-trash-alt"></i></button>}
                             <div className='comment-author'>
                               <Link to='/'>
                                 <img src={getImage(item.user && item.user.image)} />

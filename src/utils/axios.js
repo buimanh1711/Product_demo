@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-// const endpoint = 'http://localhost:5000'
+// axios.defaults.baseURL = 'http://localhost:5000'
+
 axios.defaults.baseURL = 'https://manhbui-testdeploy-mblog.herokuapp.com'
 
 const api = (method, url, data) => {
