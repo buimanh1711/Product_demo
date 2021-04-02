@@ -17,7 +17,6 @@ const PostSelector = (props) => {
     const [currentDate, setCurrentDate] = useState(null)
 
     const filter = (query) => {
-        console.log(query)
         const { category, date } = query
         setCurrentCate(category)
         setCurrentDate(date)
@@ -113,12 +112,10 @@ const PostSelector = (props) => {
 
     const like = (id) => {
         api('POST', `api/posts/like/${id}`)
-            // .then(res => console.log(res))
     }
 
     const unlike = (id) => {
         api('POST', `api/posts/unlike/${id}`)
-            // .then(res => console.log(res))
     }
 
     const likeHandle = (item, index) => {
@@ -159,6 +156,11 @@ const PostSelector = (props) => {
         setPosts(newPosts)
     }
 
+    const removePost = (postId) => {
+        const newList = posts.filter(x => x._id !== postId)
+        setPosts(newList)
+    }
+
     useEffect(() => {
         props.toggleLoading(true)
         api('GET', `/api/posts?page=${1}`)
@@ -193,7 +195,7 @@ const PostSelector = (props) => {
         <>
             <MainTemplate>
                 <FilterSelector totalFilter={filter} length={posts.length} total={totalPosts} />
-                <PostList setPosts={setPosts} likeHandle={likeHandle} posts={posts} />
+                <PostList removeEl={removePost} setPosts={setPosts} likeHandle={likeHandle} posts={posts} />
                 {
                     posts && posts.length > 0 &&
                     <Pagination changePage={changePage} page={currentPage} totalPage={totalPage} />

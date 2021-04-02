@@ -3,7 +3,6 @@ import getImage from '../../utils/getImage'
 
 const Latest = (props) => {
     const { posts } = props
-    console.log(posts)
     return (
         <>
             <div id='latest'>

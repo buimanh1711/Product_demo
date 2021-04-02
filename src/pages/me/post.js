@@ -98,12 +98,10 @@ const PostSelector = (props) => {
 
     const like = (id) => {
         api('POST', `api/posts/like/${id}`)
-        // .then(res => console.log(res))
     }
 
     const unlike = (id) => {
         api('POST', `api/posts/unlike/${id}`)
-        // .then(res => console.log(res))
     }
 
     const likeHandle = (item, index) => {

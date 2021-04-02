@@ -112,7 +112,7 @@ const MeSelector = (props) => {
             setChangeForm(false)
             window.location.reload()
           } else {
-            console.log(res.data)
+            console.log('.')
           }
         })
     }
@@ -124,7 +124,6 @@ const MeSelector = (props) => {
 
     api('POST', 'api/me/avt', formData)
       .then(res => {
-        console.log(res)
         if (res.data && res.data.status) {
           localStorage.setItem('userImage', res.data.newImage)
           window.location.reload()
@@ -135,7 +134,6 @@ const MeSelector = (props) => {
 
   const handleAvtChange = (e) => {
     const selectedFile = e.target.value
-    console.log(selectedFile)
     setFile(selectedFile)
   }
 
@@ -144,12 +142,10 @@ const MeSelector = (props) => {
 
     api('GET', '/api/me')
       .then(res => {
-        console.log(res.data)
 
         if (res.data && res.data.status) {
           setUserPosts(res.data.posts)
         } else {
-          console.log(res.data)
           history.replace({ pathname: '/sign-in' })
         }
       })

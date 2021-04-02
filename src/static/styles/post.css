@@ -317,14 +317,15 @@
 }
 
 .postList .comment-input {
-  border: 1px solid rgba(255, 255, 255, 0.267);;
+  border: 1px solid rgba(255, 255, 255, 0.267);
+  ;
   outline: none;
   color: white;
   padding: 8px;
   height: 80px !important;
   font-size: 1rem;
   font-family: myFirstFont;
-  border-radius: 20px;  
+  border-radius: 20px;
   background: transparent;
   padding-left: 12px;
   resize: none;
@@ -351,7 +352,18 @@
   padding: 0;
 }
 
+.postList-delete-comt {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  color: rgb(243, 67, 67);
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
 .postList .comment-list ul li {
+  position: relative;
   list-style-type: none;
   border-top: 1px solid rgba(255, 255, 255, 0.158);
   padding-top: 24px;
@@ -413,10 +425,10 @@
 }
 
 .postList .confirm-container {
-  background: rgba(44, 61, 80, 0.288);
+  background: rgba(37, 38, 39, 0.788);
   padding: 100px;
   border-radius: 20px;
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0.349);
   position: absolute;
   top: 50%;
   left: 50%;

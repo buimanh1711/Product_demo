@@ -4,7 +4,7 @@ import {
   Route,
 } from "react-router-dom"
 import { io } from 'socket.io-client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import './static/styles/main.css'
 import './static/styles/header.css'
@@ -29,7 +29,6 @@ import Detail from './pages/detail_post'
 import Create from './pages/create'
 import Update from './pages/update'
 import Search from './pages/search'
-import About from './pages/about'
 import Loading from './components/Loading'
 
 import store from './redux/store'
@@ -39,13 +38,6 @@ import { Provider } from 'react-redux'
 // const socket = io('https://manhbui-testdeploy-mblog.herokuapp.com')
 
 function App() {
-  // useEffect(() => {
-  //   socket.emit('chat message', 'chatting');
-  //   socket.on('rep', (data) => {
-  //     console.log(data)
-  //   })
-  // }, [])
-  console.log(process.env.API_ENDPOINT)
 
   return (
     <Provider store={store}>
@@ -77,9 +69,6 @@ function App() {
               </Route>
               <Route axact path="/posts">
                 <Post />
-              </Route>
-              <Route axact path="/about">
-                <About />
               </Route>
               <Route axact path="/search">
                 <Search />

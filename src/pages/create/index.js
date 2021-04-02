@@ -53,9 +53,7 @@ const Create = () => {
   }, [])
 
   const handleChange = (e) => {
-    console.log('hello')
     const selectedFile = e.target.value && e.target.value.length > 0 && e.target.value || '/images/defaultimg.jpg'
-    console.log(selectedFile)
     setFile(selectedFile)
   }
 

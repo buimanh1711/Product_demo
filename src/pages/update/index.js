@@ -68,7 +68,6 @@ const UpdateEl = (props) => {
       .then(res => {
         if(res.data && res.data.status) {
           setOriginData(res.data.post)
-          console.log(res.data.post)
           titleEl.current.value = res.data.post.title
           shortDescEl.current.value = res.data.post.description
           setContent(res.data.post.content)
@@ -157,9 +156,7 @@ const UpdateEl = (props) => {
   }
 
   const handleChange = (e) => {
-    console.log('hello')
     const selectedFile = e.target.value && e.target.value.length > 0 && e.target.value || '/images/defaultimg.jpg'
-    console.log(selectedFile)
     setFile(selectedFile)
   }
 

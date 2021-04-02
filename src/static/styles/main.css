@@ -208,3 +208,21 @@
     opacity: 0;
   
   }
+
+  .video-responsive {
+    display: flex;
+    align-items: center;
+  }
+  .video-container {
+    width: 67%
+  }
+
+  .video-container iframe {
+    width: 100%;
+  }
+
+  .video-title {
+    width: 32%;
+    margin-left: 20px;
+    padding-bottom: 75px
+  }

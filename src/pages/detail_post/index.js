@@ -108,12 +108,12 @@ const DetailEl = (props) => {
 
   const like = () => {
     api('POST', `api/posts/like/${post._id}`)
-      .then(res => console.log(res))
+      .then(res => console.log('liked'))
   }
 
   const unlike = () => {
     api('POST', `api/posts/unlike/${post._id}`)
-      .then(res => console.log(res))
+      .then(res => console.log('unliked'))
   }
 
   const likeHandle = (likeList) => {
@@ -202,9 +202,6 @@ const DetailEl = (props) => {
                 </button>
                 <button className='share'>
                   <i className="fas fa-share"></i>
-                </button>
-                <button className='add'>
-                  <i className="far fa-plus-square"></i>
                 </button>
               </div>
               <div className='comments'>

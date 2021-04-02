@@ -3,13 +3,22 @@ import Footer from '../components/Footer'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../redux/actions/webActions'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import api from '../utils/axios'
+
 const MainTemplateSelector = (props) => {
     const location = useLocation()
     const asPath = location.pathname || '/'
-    
+
+    const [siteInfo, setSiteInfo] = useState({})
+
     useEffect(() => {
-        props.getUserInfo()
+        api('GET', 'api/site')
+            .then(res => {
+                if (res.data && res.data.status) {
+                    setSiteInfo(res.data.site)
+                }
+            })
     }, [])
 
     return (
@@ -18,7 +27,7 @@ const MainTemplateSelector = (props) => {
             <div>
                 {props.children}
             </div>
-            <Footer />
+            <Footer site={siteInfo} />
         </>
     )
 }

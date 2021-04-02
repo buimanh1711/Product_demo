@@ -31,6 +31,7 @@ const reducer = (state = initState, action) => {
         const lastName = localStorage.getItem('lastName')
         const userImage = localStorage.getItem('userImage')
         const userBio = localStorage.getItem('userBio')
+        const role = localStorage.getItem('role')
 
         return {
             ...state,
@@ -39,7 +40,8 @@ const reducer = (state = initState, action) => {
                 lastName,
                 userId,
                 userImage,
-                userBio
+                userBio,
+                role
             },
             logged
         }

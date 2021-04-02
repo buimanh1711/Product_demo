@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
-const Footer = () => {
-
+const Footer = (props) => {
+    const { site } = props
     return (
         <>
             <div id='footer'>
@@ -13,120 +13,67 @@ const Footer = () => {
                             </Link>
                         </div>
                         <p className='footer-desc'>
-                            A minimal, functional theme for running a paid-membership publication on Ghost.
+                            {site.admin}
+                        </p>
+                        <p className='footer-desc'>
+                            {site.uni}
                         </p>
                         <div className='footer-networks'>
-                            <Link to='/'>
+                            <a to={site.fb}>
                                 <i className="fab fa-facebook"></i>
-                            </Link>
-                            <Link to='/'>
+                            </a>
+                            <a to={`https://youtube.com`}>
                                 <i className="fab fa-youtube"></i>
-                            </Link>
-                            <Link to='/'>
+                            </a>
+                            <a to='/https://instagram.com'>
                                 <i className="fab fa-instagram"></i>
-                            </Link>
-                            <Link to='/'>
-                                <i className="fab fa-twitter"></i>
-                            </Link>
+                            </a>
+                            <a title={`call to ${site.phone}`} href={`tel:${site.phone}`}>
+                                <i className="fas fa-phone"></i>
+                            </a>
                         </div>
                     </div>
                     <div className='footer-menu'>
                         <ul>
-                            <li className='title'>About</li>
+                            <li className='title'>Diễn đàn</li>
                             <li>
                                 <Link to='/'>
-                                    About
+                                    Công nghệ
                                 </Link>
                             </li>
                             <li>
                                 <Link to='/'>
-                                    About
+                                    Thị trường
                                 </Link>
                             </li>
                             <li>
                                 <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
+                                    Phát triển 4.0
                                 </Link>
                             </li>
                         </ul>
                         <ul>
-                            <li className='title'>About</li>
+                            <li className='title'>Blog</li>
                             <li>
-                                <Link to='/'>
-                                    About
+                                <Link to='/posts'>
+                                    Laptop
                                 </Link>
                             </li>
                             <li>
-                                <Link to='/'>
-                                    About
+                                <Link to='/posts'>
+                                    Mobile
                                 </Link>
                             </li>
                             <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li className='title'>About</li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li className='title'>About</li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/'>
-                                    About
+                                <Link to='/posts'>
+                                    Xe công nghệ
                                 </Link>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <p className='footer-copyright'> © 2021. All Right Reserved.
-		Published with  _mb1o4er</p>
+		Published with _Thanh Tan</p>
             </div>
         </>
     )

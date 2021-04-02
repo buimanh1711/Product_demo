@@ -1,7 +1,7 @@
 import MainTemplate from '../../layouts/MainLayout'
 import Collection1 from './collection1'
 import Latest from './latest'
-import Invite from './invite'
+import Video from './video'
 import { useEffect, useState } from 'react'
 import api from '../../utils/axios'
 import { connect } from 'react-redux'
@@ -14,7 +14,6 @@ const HomeSelector = (props) => {
         props.toggleLoading(true)
         api('GET', 'api/posts')
             .then(res => {
-                console.log(res)
                 if (res.data && res.data.status) {
                     setPosts(res.data.posts)
                     props.toggleLoading(false)
@@ -31,7 +30,7 @@ const HomeSelector = (props) => {
                 <Collection1 posts={posts} />
                 <Latest posts={posts} />
                 <Collection1 posts={posts} />
-                <Invite />
+                <Video embedId="rokGy0huYEA" />
             </MainTemplate>
         </>
     )

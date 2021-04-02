@@ -24,29 +24,7 @@ const HeaderSelector = (props) => {
         name: 'Post',
         path: '/posts',
       },
-      {
-        id: 3,
-        name: 'About',
-        path: '/about',
-      },
     ],
-    childMenu: [
-      {
-        id: 4,
-        name: 'Author',
-        path: '/author',
-      },
-      {
-        id: 5,
-        name: 'About us',
-        path: '/about-us',
-      },
-      {
-        id: 6,
-        name: 'user',
-        path: '/user',
-      }
-    ]
   }
 
   const toggleChildMenu = () => {
@@ -65,8 +43,8 @@ const HeaderSelector = (props) => {
 
     <>
       <div className='header'>
+        <SearchModal toggleSearchForm={toggleSearchForm} status={searchForm ? true : false} />
         <div className='header-container'>
-          <SearchModal toggleSearchForm={toggleSearchForm} status={searchForm ? true : false} />
           <ul className='header-menu'>
             {
               fakeMenu.menu.map(item =>
@@ -77,22 +55,6 @@ const HeaderSelector = (props) => {
                 </li>
               )
             }
-            <li onClick={toggleChildMenu} className='header-menu-item-icon'>
-              <i className="fas fa-ellipsis-h"></i>
-              <div className={childMenu ? 'header-child-menu-container active' : 'header-child-menu-container'}>
-                <ul className='header-child-menu'>
-                  {
-                    fakeMenu.childMenu.map(item =>
-                      <li key={item.id} className='header-child-menu-item'>
-                        <Link to={item.path}>
-                          {item.name}
-                        </Link>
-                      </li>
-                    )
-                  }
-                </ul>
-              </div>
-            </li>
           </ul>
           <div className='header-logo-container'>
             <Link to='/'>
@@ -155,19 +117,12 @@ const HeaderSelector = (props) => {
                   </div>
               }
             </div>
-            <input placeholder='Search...' className='mb-search' />
+            <button style={{marginLeft: 'auto', display: 'block'}} onClick={setSearchForm} className='search-btn'>
+              <i className="fas fa-search"></i>
+            </button>
             <ul className='mb-header-menu'>
               {
                 fakeMenu.menu.map(item =>
-                  <li key={item.id} className={item.path === asPath ? 'mb-header-menu-item active' : 'mb-header-menu-item'}>
-                    <Link to={item.path}>
-                      {item.name}
-                    </Link>
-                  </li>
-                )
-              }
-              {
-                fakeMenu.childMenu.map(item =>
                   <li key={item.id} className={item.path === asPath ? 'mb-header-menu-item active' : 'mb-header-menu-item'}>
                     <Link to={item.path}>
                       {item.name}

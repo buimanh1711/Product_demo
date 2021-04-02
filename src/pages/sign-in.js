@@ -72,12 +72,13 @@ const SignUpSelector = (props) => {
         if (checkValidate(usernameErr, passCheck)) {
             api('POST', '/api/sign-in', userData)
                 .then(res => {
-                    console.log('response: ', res)
                     const { data } = res
                     const { userToken } = data
+                    const role = data.userData && data.userData.role || 'user'
+
                     if (data.logged) {
                         const userInfo = data.userData
-
+                        
                         localStorage.setItem('logged', true)
                         localStorage.setItem('firstName', userInfo.firstName)
                         localStorage.setItem('lastName', userInfo.lastName)
@@ -85,6 +86,7 @@ const SignUpSelector = (props) => {
                         localStorage.setItem('userImage', userInfo.image)
                         localStorage.setItem('userBio', userInfo.bio)
                         localStorage.setItem('userToken', userToken)
+                        localStorage.setItem('role', role)
 
                         props.getUserInfo()
 
@@ -111,7 +113,7 @@ const SignUpSelector = (props) => {
                             <img src='/images/pageLogo.png' />
                         </Link>
                     </div>
-                    <h1 className='sign-in-title'>Sign in to MB<span style={{ color: '#5073FF' }}>log</span></h1>
+                    <h1 className='sign-in-title'>Welcome!</h1>
                 </div>
                 <form onSubmit={(e) => submitHandle(e)} id='sign-up-form'>
                     <label htmlFor='username'>Username: </label>

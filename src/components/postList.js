@@ -17,6 +17,7 @@ const PostListSelector = (props) => {
   const [commentList, setCommentList] = useState([])
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deletedPost, setDeletedPost] = useState({})
+  const isAdmin = web.user.role
 
   const commentEl = useRef(null)
 
@@ -66,7 +67,9 @@ const PostListSelector = (props) => {
       .then(res => {
         if (res.data && res.data.status) {
           const commentCount = [...item.comment]
-          commentCount.push({ content: postData.content })
+          
+          const newId = String(res.data.newCommentId)
+          commentCount.push({ _id: newId })
 
           const newPostList = [
             ...posts.slice(0, index),
@@ -77,12 +80,12 @@ const PostListSelector = (props) => {
             ...posts.slice(index + 1)
           ]
           props.setPosts(newPostList)
+
           commentEl.current.value = ''
-          
+
           let newComtList = commentList
           if (newComtList.length > 3)
             newComtList = [...commentList.slice(1)]
-            console.log(newComtList)
           setCommentList(
             [
               ...newComtList,
@@ -93,7 +96,8 @@ const PostListSelector = (props) => {
                   lastName: web.user.lastName,
                   image: web.user.userImage
                 },
-                ...postData
+                ...postData,
+                _id: newId
               }
             ]
           )
@@ -121,6 +125,30 @@ const PostListSelector = (props) => {
       .catch(err => {
         console.log(err)
         alert('Error!')
+      })
+  }
+
+  const deleteComment = (item, commentId, index) => {
+    const postId = item._id
+
+    api('GET', `api/posts/u/delete-comment?commentId=${commentId}&postId=${postId}&userId=${web.user.userId}`)
+      .then(res => {
+        if(res.data && res.data.status) {
+          let commentCount = [...item.comment]
+          commentCount = commentCount.filter(x => x._id !== commentId)
+  
+          const newPostList = [
+            ...posts.slice(0, index),
+            {
+              ...item,
+              comment: commentCount
+            },
+            ...posts.slice(index + 1)
+          ]
+          props.setPosts(newPostList)
+  
+          getComment(postId)
+        }
       })
   }
 
@@ -159,15 +187,22 @@ const PostListSelector = (props) => {
                 </div>
                 <div className='content-container'>
                   {
-                    props.author &&
+                    props.author && isAdmin === 'admin' &&
                     <div className='author-role'>
                       <Link to={`/posts/update/${item._id}`} style={{ color: 'rgb(84, 84, 216)' }}>Edit</Link>
                       <button onClick={() => toggleDeleteForm(item)} className='delete'>
                         <i className="far fa-trash-alt"></i>
                       </button>
                     </div>
-                    ||
-                    null
+
+                  }
+                  {
+                    isAdmin === 'admin' && !props.author &&
+                    <div className='author-role'>
+                      <button onClick={() => toggleDeleteForm(item)} className='delete'>
+                        <i className="far fa-trash-alt"></i>
+                      </button>
+                    </div>
                   }
                   <Link to={`/posts/${item.slug}`} className='post-title'>
                     {item.title}
@@ -216,19 +251,22 @@ const PostListSelector = (props) => {
                               commentList && commentList.length > 0 &&
                               <ul>
                                 {
-                                  commentList.map(item => (
-                                    <li key={item.id} className='comment-item'>
+                                  commentList.map((comment, commentIndex) => (
+                                    <li key={comment._id} className='comment-item'>
+                                      {
+                                        (isAdmin === 'admin' || (comment.user && comment.user._id === web.user.userId)) && <button onClick={() => deleteComment(item, comment._id, index)} className='postList-delete-comt'><i className="far fa-trash-alt"></i></button>
+                                      }
                                       <div className='comment-author'>
                                         <Link to={`/`}>
-                                          <img src={getImage(item.user && item.user.image || null)} />
+                                          <img src={getImage(comment.user && comment.user.image || null)} />
                                         </Link>
                                         <Link to={`/`}>
-                                          {`${item.user && item.user.firstName} ${item.user && item.user.lastName}`}
+                                          {`${comment.user && comment.user.firstName} ${comment.user && comment.user.lastName}`}
                                         </Link>
                                       </div>
                                       <div className='comment-content'>
                                         <p>
-                                          {item.content}
+                                          {comment.content}
                                         </p>
                                       </div>
                                     </li>

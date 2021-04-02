@@ -161,7 +161,7 @@ const SignInSelector = (props) => {
                             <img src='/images/pageLogo.png' alt='logo' />
                         </Link>
                     </div>
-                    <h1 className='sign-in-title'>Sign up to MB<span style={{ color: '#5073FF' }}>log</span></h1>
+                    <h1 className='sign-in-title'>Welcome!</h1>
                 </div>
                 <form onSubmit={(e) => submitHandle(e)} id='sign-in-form'>
                     <span style={{ fontFamily: 'myFirstFontLight' }}>Full name:</span>
