@@ -187,7 +187,7 @@ const PostListSelector = (props) => {
                 </div>
                 <div className='content-container'>
                   {
-                    props.author && isAdmin === 'admin' &&
+                    props.author &&
                     <div className='author-role'>
                       <Link to={`/posts/update/${item._id}`} style={{ color: 'rgb(84, 84, 216)' }}>Edit</Link>
                       <button onClick={() => toggleDeleteForm(item)} className='delete'>
