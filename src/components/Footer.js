@@ -19,16 +19,16 @@ const Footer = (props) => {
                             {site.uni}
                         </p>
                         <div className='footer-networks'>
-                            <a to={site.fb}>
+                            <a href={site.fb}>
                                 <i className="fab fa-facebook"></i>
                             </a>
-                            <a to={`https://youtube.com`}>
-                                <i className="fab fa-youtube"></i>
+                            <a href={`https://youtube.com`}>
+                                <i className="fab fa-google"></i>
                             </a>
-                            <a to='/https://instagram.com'>
+                            <a href='/https://instagram.com'>
                                 <i className="fab fa-instagram"></i>
                             </a>
-                            <a title={`call to ${site.phone}`} href={`tel:${site.phone}`}>
+                            <a href={`call to ${site.phone}`} href={`tel:${site.phone}`}>
                                 <i className="fas fa-phone"></i>
                             </a>
                         </div>
