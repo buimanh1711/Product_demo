@@ -46,7 +46,7 @@ function App() {
           <Loading />
           <div className='container'>
             <Switch>
-              {<Route path="/sign-in">
+              <Route path="/sign-in">
                 <SignIn />
               </Route>
               <Route path="/sign-up">
